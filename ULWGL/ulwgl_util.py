@@ -23,11 +23,11 @@ class UnixUser:
         entry: struct_passwd = getpwuid(uid)
         # Immutable properties, hence no setters
         self.name: str = entry.pw_name
-        self.puid: str = entry.pw_uid  # Should be equivalent to the value from getuid
+        self.puid: int = entry.pw_uid  # Should be equivalent to the value from getuid
         self.dir: str = entry.pw_dir
         self.is_user: bool = self.puid == uid
 
-    def get_home_dir(self) -> Path:
+    def get_home_dir(self) -> str:
         """User home directory as determined by the password database that's derived from the current process's real user id."""
         return Path(self.dir).as_posix()
 
@@ -207,7 +207,7 @@ def _install_ulwgl(
     The designated locations to copy to will be: ~/.local/share/ULWGL, ~/.local/share/Steam/compatibilitytools.d
     The tools that will be copied are: SteamRT, Pressure Vessel, ULWGL-Launcher, ULWGL Launcher files, Reaper and ULWGL_VERSION.json
     """
-    cp: Callable[Path, Path] = None
+    cp: Callable[[Path, Path], None] = None
 
     if hasattr(os, "copy_file_range"):
         log.debug(msg("CoW filesystem detected", Level.DEBUG))
@@ -271,7 +271,7 @@ def _update_ulwgl(
     This happens by way of comparing the key/values of the local ULWGL_VERSION.json against the root configuration file
     In the case that the writable directories we copy to are in a partial state, a best effort is made to restore the missing files
     """
-    cp: Callable[Path, Path] = None
+    cp: Callable[[Path, Path], None] = None
 
     if hasattr(os, "copy_file_range"):
         log.debug(msg("CoW filesystem detected", Level.DEBUG))

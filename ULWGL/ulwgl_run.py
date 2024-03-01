@@ -347,7 +347,7 @@ if __name__ == "__main__":
         log.warning(msg("Keyboard Interrupt", Level.WARNING))
         sys.exit(1)
     except Exception as e:  # noqa: BLE001
-        print_exception(e)
+        log.exception(msg(str(e), Level.ERROR))
         sys.exit(1)
     finally:
         # Cleanup .ref file on every exit

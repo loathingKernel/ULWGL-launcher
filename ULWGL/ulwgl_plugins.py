@@ -16,9 +16,9 @@ def set_env_toml(env: Dict[str, str], args: Namespace) -> Dict[str, str]:
     """
     try:
         import tomllib
-    except ModuleNotFoundError:
+    except ModuleNotFoundError as e:
         msg: str = "tomllib requires Python 3.11"
-        raise ModuleNotFoundError(msg)
+        raise ModuleNotFoundError(msg) from e
 
     toml: Dict[str, Any] = None
     path_config: str = Path(getattr(args, "config", None)).expanduser().as_posix()
