@@ -1,8 +1,8 @@
 {
   "umu": {
     "versions": {
-      "launcher": "##UMU_VERSION##",
-      "runner": "##UMU_VERSION##",
+      "launcher": "@UMU_VERSION@",
+      "runner": "@UMU_VERSION@",
       "runtime_platform": "steamrt3"
     }
   }
